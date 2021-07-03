@@ -310,3 +310,7 @@ void op_Fx65() {
   uint8_t vx = (opcode & 0x0F00u) >> 8u;
   memcpy(reg, mem + ir, vx);
 }
+
+void op_unknown() {
+  exit(42);
+}

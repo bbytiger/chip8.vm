@@ -36,5 +36,6 @@ void op_Fx29();
 void op_Fx33();
 void op_Fx55();
 void op_Fx65();
+void op_unknown();
 
 #endif
