@@ -4,6 +4,7 @@ OBJS = \
  opcodes.o \
  cpu.o \
  display.o \
+ memory.o \
 
 LINK_TARGET = chip8.o
 
@@ -26,3 +27,4 @@ main.o: opcodes.h utils.h display.h
 utils.o: utils.h
 opcodes.o: opcodes.h utils.h
 cpu.o: memory.h register.h input.h timer.h opcodes.h
+memory.o: memory.h

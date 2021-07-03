@@ -186,11 +186,11 @@ void op_Dxyn() {
     px_data = mem[ir+i];
     for (int j = 0; j < 8; j++) {
       if ((px_data & (0x80 >> j))) { // for each of the bits, check against pixel to see if it should be filled in for the sprite
-	// if exceed either side of the screen, wrap around
-	uint32_t* px_ptr = &screen[(vx + i + (vy + j) * screen_W) % screen_SZ];
-	// if any pixels erased, set the vf flag
-	if (*(px_ptr) == 0xFFFFFFF) reg[vF] = 1;
-	*(px_ptr) ^= 0xFFFFFFFF;
+        // if exceed either side of the screen, wrap around
+        uint32_t* px_ptr = &screen[(vx + i + (vy + j) * screen_W) % screen_SZ];
+        // if any pixels erased, set the vf flag
+        if (*(px_ptr) == 0xFFFFFFF) reg[vF] = 1;
+        *(px_ptr) ^= 0xFFFFFFFF;
       }
     }
   }

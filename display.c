@@ -2,11 +2,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void init(char const* title, int window_W, int window_H, int texture_W, int texture_H) {
+void print_screen() {
+	for (int i = 0; i < screen_H; i++) {
+		for (int j = 0; j < screen_W; j++) {
+			printf("%X ", screen[i * screen_W + j]);
+		}
+		printf("\n");
+	}
+}
+
+void init(char const* title, int window_W, int window_H) {
   SDL_Init(SDL_INIT_VIDEO);
-  window = SDL_CreateWindow(title, 0, 0, window_W, window_H, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_W * 8, screen_H*8, 0);
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, texture_W, texture_H);
 }
 
 void teardown() {
@@ -16,10 +24,24 @@ void teardown() {
   SDL_Quit();
 }
 
-void update(void const* buf, int pitch) {
-  SDL_UpdateTexture(texture, (void*)0, buf, pitch);
+void update(int pitch) {
+	print_screen();
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
-  SDL_RenderCopy(renderer, texture, (void*)0, (void*)0);
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+	for (int y = 0; y < screen_H; y++) {
+		for (int x = 0; x < screen_W; x++) {
+			if (screen[x + (y * 64)]) {
+					SDL_Rect rect;
+					rect.x = x * 8;
+					rect.y = y * 8;
+					rect.w = 8;
+					rect.h = 8;
+					SDL_RenderFillRect(renderer, &rect);
+			}
+		}
+	}
   SDL_RenderPresent(renderer);
 }
 

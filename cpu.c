@@ -1,8 +1,12 @@
 #include "cpu.h"
+#include <stdio.h>
 
 void cycle() {
+  print_mem();
   opcode = (mem[pc] << 8u) | mem[pc+1];
   pc += 2;
+  printf("opcode: %x\n", opcode);
+  printf("pc: %x\n", pc);
 
   switch(opcode & 0xF000) {
   case 0x0000:

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <sys/timeb.h>
 #include "cpu.h"
 #include "opcodes.h"
 #include "utils.h"
@@ -18,21 +19,25 @@ int main(int argc, char** argv) {
   int cycle_delay = atoi(argv[2]);
   char* const rom_file = argv[3];
 
-  init("CHIP-8 Emu", screen_W*video_scale, screen_H*video_scale, screen_W, screen_H);
+  init("CHIP-8 Emu", screen_W*video_scale, screen_H*video_scale);
   init_chip();
   load_rom(rom_file);
   int video_pitch = screen[0] * screen_H;
-  time_t last_cycle_time = time(0);
+  struct timeb last_cycle_time, current_time;
+  ftime(&last_cycle_time);
   bool quit = false;
 
   while(!quit) {
     quit = process_input(keypad);
-    time_t current_time = time(0);
-    double dt = difftime(current_time, last_cycle_time) / 1000; // convert to millisecondsß
+    ftime(&current_time);
+    int dt = (int) (1000.0 * (current_time.time - last_cycle_time.time) + (current_time.millitm - last_cycle_time.millitm)); // convert to milliseconds
+/*     printf("%d\n", dt);
+    printf("%d\n", cycle_delay); */
     if (dt > cycle_delay) {
+      printf("ready to cycle\n");
       last_cycle_time = current_time;
       cycle();
-      update(screen, video_pitch);
+      update(video_pitch);
     }
   }
 
