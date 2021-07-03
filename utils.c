@@ -20,7 +20,7 @@ void load_rom(char* const filename) {
   }
 }
 
-void load_chip() {
+void init_chip() {
   // set the program to the start address of the rom
   pc = START_ADDR;
 
