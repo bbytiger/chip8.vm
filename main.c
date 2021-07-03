@@ -31,11 +31,10 @@ int main(int argc, char** argv) {
     quit = process_input(keypad);
     ftime(&current_time);
     int dt = (int) (1000.0 * (current_time.time - last_cycle_time.time) + (current_time.millitm - last_cycle_time.millitm)); // convert to milliseconds
-/*     printf("%d\n", dt);
-    printf("%d\n", cycle_delay); */
     if (dt > cycle_delay) {
       printf("ready to cycle\n");
       last_cycle_time = current_time;
+      print_reg();
       cycle();
       update(video_pitch);
     }

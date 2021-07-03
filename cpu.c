@@ -4,7 +4,6 @@
 void cycle() {
   print_mem();
   opcode = (mem[pc] << 8u) | mem[pc+1];
-  pc += 2;
   printf("opcode: %x\n", opcode);
   printf("pc: %x\n", pc);
 

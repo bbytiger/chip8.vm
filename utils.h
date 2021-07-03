@@ -16,6 +16,7 @@
 
 void load_rom(char* const filename);
 void init_chip();
+void print_reg();
 
 // fontset
 

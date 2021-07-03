@@ -18,7 +18,6 @@ void init(char const* title, int window_W, int window_H) {
 }
 
 void teardown() {
-  SDL_DestroyTexture(texture);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
