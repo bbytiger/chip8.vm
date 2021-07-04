@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 void print_screen() {
+	printf("screen: ");
 	for (int i = 0; i < screen_H; i++) {
 		for (int j = 0; j < screen_W; j++) {
 			printf("%X ", screen[i * screen_W + j]);

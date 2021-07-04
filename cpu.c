@@ -4,7 +4,11 @@
 void cycle() {
   print_mem();
   opcode = (mem[pc] << 8u) | mem[pc+1];
-  printf("opcode: %x\n", opcode);
+  printf("mem[pc-2]: %X\n", mem[pc-2]);
+  printf("mem[pc-1]: %X\n", mem[pc-1]);
+  printf("mem[pc]: %X\n", mem[pc]);
+  printf("mem[pc+1]: %X\n", mem[pc+1]);
+  printf("opcode: %X\n", opcode);
   printf("pc: %x\n", pc);
 
   switch(opcode & 0xF000) {
@@ -17,6 +21,7 @@ void cycle() {
       op_00EE();
       break;
     default:
+      printf("in the 0x0000 switch\n");
       op_unknown();
     }
     break;

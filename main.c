@@ -34,7 +34,9 @@ int main(int argc, char** argv) {
     if (dt > cycle_delay) {
       printf("ready to cycle\n");
       last_cycle_time = current_time;
+      print_pointers();
       print_reg();
+      print_stack();
       cycle();
       update(video_pitch);
     }

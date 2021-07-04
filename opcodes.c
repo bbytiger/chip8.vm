@@ -8,16 +8,15 @@
 
 void op_00E0() {
   // clear the display
-  memset(screen, 0, sizeof(screen));
   for (int i = 0; i < screen_SZ; i++) {
-    assert(screen[i] == 0);
+    screen[i] = 0;
   }
   pc += 2;
 }
 
 void op_00EE() {
   // return from subroutine
-  pc = stack[sp]; --sp; pc+=2; 
+  pc = stack[sp]; --sp; pc += 2; 
 }
 
 void op_1nnn() {
@@ -152,6 +151,7 @@ void op_8xyE() {
   uint8_t vx = (opcode & 0x0F00u) >> 8u;
   reg[vF] = (reg[vx] & 0x80u) >> 7u;
   reg[vx] <<= 1; // bitshift is much faster than mult
+  pc += 2;
 }
 
 void op_9xy0() {
@@ -298,5 +298,6 @@ void op_Fx65() {
 }
 
 void op_unknown() {
+  printf("op_unknown\n");
   exit(42);
 }

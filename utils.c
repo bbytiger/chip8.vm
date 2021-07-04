@@ -10,6 +10,19 @@ void print_reg() {
   printf("\n");
 }
 
+void print_stack() {
+  printf("stack: ");
+  for (int i = 0; i < 16; i++) {
+    printf("%X ", stack[i]);
+  }
+  printf("\n");
+}
+
+void print_pointers() {
+  printf("pc: %X\n", pc);
+  printf("sp: %X\n", sp);
+}
+
 // load rom into memory at 0x200
 void load_rom(char* const filename) {
   FILE* fptr = fopen(filename, "rb");
