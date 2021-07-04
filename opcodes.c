@@ -276,25 +276,37 @@ void op_Fx29() {
 void op_Fx33() {
   // Store BCD representation of Vx in memory locations I, I+1, and I+2.
   // The interpreter takes the decimal value of Vx, and places the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.
-   uint8_t vx = (opcode & 0x0F00u) >> 8u;
-   mem[ir] = reg[vx] / 100;
-   mem[ir+1] = (reg[vx] % 100) / 10;
-   mem[ir+2] = reg[vx] % 10;
-   pc += 2;
+  printf("calling 0xFx33\n");
+  uint8_t vx = (opcode & 0x0F00u) >> 8u;
+  printf("reg[vx]: %d\n", reg[vx]);
+  mem[ir] = reg[vx] / 100;
+  mem[ir+1] = (reg[vx] % 100) / 10;
+  mem[ir+2] = reg[vx] % 10;
+  printf("ir: %X\n", ir);
+  printf("mem[ir]: %d\n", mem[ir]);
+  printf("mem[ir+1]: %d\n", mem[ir+1]);
+  printf("mem[ir+2]: %d\n", mem[ir+2]);
+  pc += 2;
 }
 
 void op_Fx55() {
   // Store registers V0 through Vx in memory starting at location I.
   // The interpreter copies the values of registers V0 through Vx into memory, starting at the address in I.
   uint8_t vx = (opcode & 0x0F00u) >> 8u;
-  memcpy(mem + ir, reg, vx); pc += 2;
+  for (int i = 0; i <= vx; i++) {
+    mem[ir+i] = reg[i];
+  } 
+  pc += 2;
 }
 
 void op_Fx65() {
   // Read registers V0 through Vx from memory starting at location I.
   // The interpreter reads values from memory starting at location I into registers V0 through Vx.
   uint8_t vx = (opcode & 0x0F00u) >> 8u;
-  memcpy(reg, mem + ir, vx); pc += 2;
+  for (int i = 0; i <= vx; i++) {
+    reg[i] = mem[ir+i];
+  }
+  pc += 2;
 }
 
 void op_unknown() {
