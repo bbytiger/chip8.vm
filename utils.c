@@ -32,11 +32,13 @@ void load_rom(char* const filename) {
     rewind(fptr);
 
     // load into buffer and close the file                                                          
-    char* buf = (char*)malloc(sz + 1);
+    char* buf = (char*)malloc(sz + 1); // use a little bit extra memory
     fread(buf, sizeof(char), sz, fptr);
     fclose(fptr);
 
-    memcpy(mem + START_ADDR, buf, sz);
+    for (int i = 0; i < sz; i++) {
+      mem[START_ADDR + i] = buf[i];
+    }
     free(buf);
   }
 }
@@ -47,7 +49,7 @@ void init_chip() {
   init_gen();
   // load fontset into memory
   for (int i = 0; i < FONTSET_SZ; i++) {
-    mem[FONTSET_START_ADDR + i] = fontset[i];
+    mem[i] = fontset[i];
   }
 }
 

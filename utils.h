@@ -23,7 +23,6 @@ void print_pointers();
 // fontset
 
 static const uint8_t FONTSET_SZ = 80;
-static const uint8_t FONTSET_START_ADDR = 0x50;
 
 static uint8_t fontset[FONTSET_SZ] = {
   0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
